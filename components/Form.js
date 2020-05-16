@@ -1,89 +1,1 @@
-import React from "react";
-import { ScrollView, Text, View, Picker, Button, Border } from "react-native";
-import firebase from "firebase";
-import "@firebase/firestore";
-
-export default function Form ({ docRef }) {
-  const [firstOption, setFirstOption] = React.useState("");
-  const [secondOption, setsecondOption] = React.useState("");
-  const [submitted, setSubmitted] = React.useState(false);
-  const [message, setMessage] = React.useState("");
-
-  const submit = () => {
-    console.log({ firstOption, secondOption });
-    if (!submitted) setSubmitted(true);
-    if (firstOption === "" || secondOption === "") return;
-
-    const newChoices = { firstOption, secondOption, time: new Date() };
-
-    firebase
-      .firestore()
-      .runTransaction((transaction) => {
-        return transaction.get(docRef).then((doc) => {
-          if (!doc.exists) {
-            transaction.set(docRef, { choices: [newChoices] });
-          } else {
-            const previousChoices = doc.data()?.choices || [];
-            transaction.update(docRef, {
-              choices: [newChoices, ...previousChoices],
-            });
-          }
-        });
-      })
-      .then(() => setMessage(`Submitted ${firstOption} and ${secondOption} :)`))
-      .catch((err) => setMessage(`Failed due to ${err} :(`));
-  };
-
-  return (
-     
-    <View 
-      style={{
-        flex: 5,
-        backgroundColor: "#FFFFF",
-        padding: 20,
-        width: 350,
-        height:40,
-        justifyContent: "space-around",
-      }}
-    >
-      <Text style={{ fontSize: 20, fontWeight: "bold"}}></Text>
-
-      <Text style={{ color: "red" }}>
-        {submitted && firstOption === "" && "You must select a firstOption."}
-      </Text>
-      <Picker
-        selectedValue={firstOption}
-        onValueChange={(value) => setFirstOption(value)}
-      >
-        <Picker.Item label="First Option" value="" />
-        <Picker.Item label="Module 101" value="1" />
-        <Picker.Item label="first Option 102" value="2" />
-        <Picker.Item label="first Option 103" value="3" />
-        <Picker.Item label="first Option 104" value="4" />
-        <Picker.Item label="first Option 201" value="5" />
-        <Picker.Item label="first Option 202" value="6" />
-        <Picker.Item label="firstOption 203" value="7" />
-        <Picker.Item label="firstOption 204" value="8" />
-
-      </Picker>
-
-      <Text style={{ color: "red" }}>
-        {submitted && secondOption === "" && "You must select a Second Option."}
-      </Text>
-
-      <Picker
-        selectedValue={secondOption}
-        onValueChange={(value) => setsecondOption(value)}
-      >
-        <Picker.Item label="Second Option" value="" />
-
-        <Picker.Item label="Choice A" value="a" />
-        <Picker.Item label="Choice B" value="b" />
-        <Picker.Item label="Choice C" value="c" />
-      </Picker>
-
-      <Button title="Submit" onPress={submit}/>
-      <Text> {message} </Text>
-    </View>
-  );
-}
+import React from "react";import { ScrollView, Text, View, Picker, Button, Border, StyleSheet, TouchableOpacity } from "react-native";import Constants from "expo-constants";import firebase from "firebase";import "@firebase/firestore";export default function Form ({ docRef }) {  const [firstOption, setFirstOption] = React.useState("");  const [secondOption, setsecondOption] = React.useState("");  const [submitted, setSubmitted] = React.useState(false);  const [message, setMessage] = React.useState("");  const submit = () => {    console.log({ firstOption, secondOption });    if (!submitted) setSubmitted(true);    if (firstOption === "" || secondOption === "") return;    const newChoices = { firstOption, secondOption, Time: new Date() };    firebase      .firestore()      .runTransaction((transaction) => {        return transaction.get(docRef).then((doc) => {          if (!doc.exists) {            transaction.set(docRef, { choices: [newChoices] });          } else {            const previousChoices = doc.data()?.choices || [];            transaction.update(docRef, {              choices: [newChoices, ...previousChoices],            });          }        });      })      .then(() => setMessage(`Submitted ${firstOption} and ${secondOption} :)`))      .catch((err) => setMessage(`Failed due to ${err} :(`));  };  return (         <View       style={{        flex: 0.9,        backgroundColor: "#FFFFF",        padding: 30,        width: "95%",        // marginBottom:30,        justifyContent: "space-around",      }}    >      {/*<Text style={{ fontSize: 20, fontWeight: "bold"}}>New Choices</Text>*/}      <Text style={{ color: "red" }}>        {submitted && firstOption === "" && "You must select a firstOption."}      </Text>      <Picker        selectedValue={firstOption}        onValueChange={(value) => setFirstOption(value)}      >        <Picker.Item label="Module" value="" />        <Picker.Item label="Module 101" value="Module 101" />        <Picker.Item label="Module 102" value="Module 102" />        <Picker.Item label="Module 103" value="Module 103" />        <Picker.Item label="Module 104" value="Module 104" />        <Picker.Item label="Module 201" value="Module 201" />        <Picker.Item label="Module 202" value="Module 202" />        <Picker.Item label="Module 203" value="Module 203" />        <Picker.Item label="Module 204" value="Module 204" />      </Picker>      <Text style={{ color: "red" }}>        {submitted && secondOption === "" && "You must select a Second Option."}      </Text>      <Picker        selectedValue={secondOption}        onValueChange={(value) => setsecondOption(value)}      >        <Picker.Item label="Surgery" value="" />        <Picker.Item label="st peters med centre" value="st peters med centre" />        <Picker.Item label="North Laine med centre" value="North Laine med centre" />        <Picker.Item label="Choice C" value="c" />      </Picker><View>        {/*<Button  title="Learn More"  color="#841584"  accessibilityLabel="Learn more about this purple button"  onPress={submit}/>*/}{/*onPress={submit,() => alert('Hello, world!')}*/}      <TouchableOpacity        onPress={submit}        style={{ backgroundColor: '#026666', borderRadius: 15 }}>        <Text style={{ fontSize: 20, color: '#fff', textAlign: 'center', marginTop: 15 }}>Submit info</Text>       <Text> {message} </Text>      </TouchableOpacity>       </View>    </View>  );}const styles = StyleSheet.create({  container: {    flex: 1,    marginTop: Constants.statusBarHeight,    marginHorizontal: 16,  },  button: {    marginBottom: 10,    position: 'absolute',    bottom:0,  },});

@@ -30,7 +30,7 @@ export default function Login() {
   return (
     <View
       style={{
-        backgroundColor: "#42cdef",
+        backgroundColor: "#90E1E8",
         justifyContent: "space-around",
         alignItems: "center",
         maxHeight: 300,

@@ -2,6 +2,8 @@ import React from 'react';
 import { Platform } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 import { Ionicons } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons'; 
+//import { SimpleLineIcons } from '@expo/vector-icons';
 import ViewPager from '@react-native-community/viewpager';
 
 
@@ -27,9 +29,11 @@ import attendanceDate from '../screens/attendanceDate';
 //import toDoList from '../screens/toDoList';
 //import studentRegister from '../screens/studentRegister';
 //import registration from '../screens/registration';
-import course from '../screens/course';
+//import course from '../screens/course';
+import Examinations from '../screens/Examinations';
+import SkillsScreen from '../screens/SkillsScreen';
 import StudentLogin from '../screens/StudentLogin';
-
+//import PhoneLogin from '../screens/PhoneLogin';
 
 
 const config = Platform.select({
@@ -68,9 +72,9 @@ const LinksStack = createStackNavigator(
 );
 
 LinksStack.navigationOptions = {
-  tabBarLabel: 'Attendance',
+  tabBarLabel: 'Login',
   tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-calendar' : 'md-link'} />
+    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-log-in' : 'md-link'} />
   ),
 };
 
@@ -79,14 +83,14 @@ LinksStack.path = '';
 
 const SessionsStack = createStackNavigator(
   {
-    course: course,
+    SkillsScreen: SkillsScreen,
   },
   config
 );
 SessionsStack.navigationOptions = {
-  tabBarLabel: 'C.S.E',
+  tabBarLabel: 'Skills',
   tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-bed' : 'md-link'} />
+    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-list-box' : 'md-link'} />
   ),
 };
 
@@ -94,15 +98,15 @@ SessionsStack.path = '';
 /*****************************************************path pots****/
 const SettingsStack = createStackNavigator(
   {
-    QRCodeScreen: QRCodeScreen,
+    Examinations: Examinations,
   },
   config
 );
 
 SettingsStack.navigationOptions = {
-  tabBarLabel: 'QR Code',
+  tabBarLabel: 'Examinations',
   tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-barcode' : 'md-link'} />
+    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-bed' : 'md-link'} />
   ),
 };
 
@@ -118,7 +122,7 @@ const GameStack = createStackNavigator(
 GameStack.navigationOptions = {
   tabBarLabel: 'Feedback',
   tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-chat' : 'md-link'} />
+    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-calendar' : 'md-link'} />
   ),
 };
 

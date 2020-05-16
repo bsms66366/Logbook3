@@ -8,6 +8,7 @@ import * as Permissions from 'expo-permissions';
 
 
 
+
 // import all basic components
 console.disableYellowBox = true;
 
@@ -126,7 +127,7 @@ export default class App extends Component {
 
 
   _renderDotIndicator() {
-    return <PagerDotIndicator pageCount={3} />;
+    return <PagerDotIndicator pageCount={5} />;
   }
   _renderTabIndicator() {
     let tabs = [
@@ -138,6 +139,12 @@ export default class App extends Component {
       },
       {
         text: 'Three',
+      },
+      {
+        text: 'Four',
+      },
+      {
+        text: 'Five',
       },
     ];
     return <PagerTabIndicator tabs={tabs} />;
